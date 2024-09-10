@@ -30,4 +30,3 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
 - src : all source code (.R) needed to analyse data & print results
 *note: this project uses distinct folders for different stages of the project. These stages include; data-preparation, analysis & paper*
 
-## running instructions
