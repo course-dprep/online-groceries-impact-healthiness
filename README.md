@@ -25,6 +25,7 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
 
 ## Repository overview
 - README.md
+- deliverables: used for dataprep class. The deliverables provide an updated markdown file and knitted pdf file for each week
 - data: raw data used in the project
 - gen: generated files resulting from R code
 - src:  source code (.R) needed to analyse data & print results
