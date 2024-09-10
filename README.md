@@ -6,7 +6,7 @@ The demand for healthier food consumption has increased significantly in recent 
 which purchasing decisions are made, retailers play a crucial role in the forming of consumers’ food purchasing
 behavior and habits. Over the past decade, there has been a noticeable rise in Online Grocery Shopping
 (OGS), and the adoption of OGS has significantly accelerated since the start of the COVID-19 pandemic.
-Recent literature has investigated how the healthiness of online grocery purchases differs from offline (instore) purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017). This research generally
+Recent literature has investigated how the healthiness of online grocery purchases differs from offline (in-store) purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017). This research generally
 finds that online shopping baskets tend to be healthier compared to offline baskets. Yet, these studies often
 neglect the fact that households that adopt OGS may be different from households that do not, and that their
 shopping baskets may be healthier to begin with. Second, they also neglect the fact that most households
