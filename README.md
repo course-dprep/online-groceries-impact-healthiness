@@ -25,8 +25,9 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
 
 ## Repository overview
 - README.md
-- data  : all raw data used in the project
-- gen   : all generated files resulting from R code
-- src   : all source code (.R) needed to analyse data & print results
+- data: raw data used in the project
+- gen: generated files resulting from R code
+- src:  source code (.R) needed to analyse data & print results
+- makefile: makefile to automatically run entire project
 *note: this project uses distinct folders for different stages of the project. These stages include; data-preparation, analysis & paper*
 
