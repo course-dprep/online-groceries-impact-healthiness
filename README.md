@@ -1,5 +1,8 @@
 # The Impact of Online Grocery Shopping on the Healthiness of Households’ Food Purchases
 
+## *Note: for the project update deliverables please look in the deliverables folder for the respective week*
+
+
 ## Research motivation
 
 The demand for healthier food consumption has increased significantly in recent years. For many households, supermarket retailers are still the primary source for their food purchases. By shaping the environment in
