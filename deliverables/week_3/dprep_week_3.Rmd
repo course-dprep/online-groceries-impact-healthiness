@@ -1,66 +1,4 @@
----
-title: "The Impact of Online Grocery Shopping on the Healthiness of Households’ Food Purchases"
-subtitle: "Project Data Preparation & Workflow Management"
-author: "Melle Klein Goldewijk"
-output: pdf_document
-date: "2024-09-05"
----
- 
-
- 
-
-**Research Motivation**
- 
-The demand for healthier food consumption has increased significantly in recent years. For 
-many households, supermarket retailers are still the primary source for their food purchases. 
-By shaping the environment in which purchasing decisions are made, retailers play a crucial 
-role in the forming of consumers’ food purchasing behavior and habits. Over the past decade,
-there has been a noticeable rise in Online Grocery Shopping (OGS), and the adoption of OGS 
-has significantly accelerated since the start of the COVID-19 pandemic. Recent literature has 
-investigated how the healthiness of online grocery purchases differs from offline (in-store)
-purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017). This research
-generally finds that online shopping baskets tend to be healthier compared to offline baskets.
-Yet, these studies often neglect the fact that households that adopt OGS may be different from 
-households that do not, and that their shopping baskets may be healthier to begin with. Second, 
-they also neglect the fact that most households that shop online still buy the majority of their 
-groceries in physical stores. These households are called hybrid shoppers, which implies that 
-they utilize both online and offline shopping channels to make their purchases. Consequently, 
-there is a gap in our understanding regarding the impact of OGS on the overall healthiness of 
-groceries when considering both online and offline shopping behaviors together. While online 
-grocery baskets tend to be healthier compared to offline baskets, it is unclear if the adoption of 
-OGS contributes to healthier consumption or if it results in a redistribution across channels, 
-where consumers simply shift the more healthy purchases online and purchase unhealthy 
-products mainly offline. More research is needed that examines how households alternate 
-between online and offline shopping trips and how they allocate their purchases across both 
-channels. As such, the central question in this project is:
-
-*How does the transition to hybrid grocery shopping affect the healthiness of food purchases 
-across both online and offline grocery channels?*
-
-The formal analysis examines how the healthiness of households’ grocery baskets changes
-once they start shopping in online channels in addition to their in-store purchases. We will 
-employ a Difference-in-Difference (DiD) approach to compare the changes in healthiness 
-of grocery baskets for households that transition to hybrid shopping against those that 
-continue shopping exclusively offline. This approach allows for controlling for general trends
-that affect all households (e.g. COVID-19 pandemic). By using a DiD model, we can isolate
-the effect that OGS has on the healthiness of households’ grocery food purchases.
-\newpage
-
-**Setup**
-
-*Note:*
-
-The official project for my PhD uses household purchase data provided by AiMark. A non-disclosure agreement prevents me from sharing this data publicly, creating some complications with uploading the data on Github. Given that the nature of this course lies in creating an automated project and Github Repisitory, and not on the actual outcome of analysis, I have created a sample dataset similar to the acutal data that I use for my PhD. In this sample dataset, I have annonymized the households, barcodes and retailers, making it impossible to trace back to the actual purchase data provided by AiMark. This sample dataset will be uploaded on GitHub, so I am able to fully complete the project assignment as intended.
-
-*Required packages*
-
-This markdown uses several packages to download, analyze and print data. The packages that will be used are listed below and will be automatically installed, if not already present on the system.
-
-* dplyr
-* data.table
-* xtable
-* tinytex
-
+*Installing required packages*
 ```{r, include=FALSE, message=FALSE, warning=FALSE}
 required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2")
 
@@ -77,80 +15,113 @@ lapply(required_packages, library, character.only = TRUE)
 rm(pkg, installed_packages, required_packages)
 ```
 
+*Directory creation & setup*
+```{r setup, include=FALSE}
+# set wd to home as basis for project storage
+setwd("~")
+
+# create directory to save project
+dir.create("./dprep-project-team-14")
+setwd("./dprep-project-team-14")
+
+# create sub-directories
+dir.create("data")
+dir.create("gen")
+dir.create("gen/data-preparation")
+dir.create("gen/analysis")
+dir.create("gen/paper")
+dir.create("src")
+dir.create("src/data-preparation")
+dir.create("src/analysis")
+dir.create("src/paper")
+```
+
+
 *Downloading & opening data*
 
 The dataset has been uploaded on GitHub and will be automatically downloaded and opened when running the RMarkdown. The downloaded data takes form of a Excel (csv) file of around 15MB. 
 
 ```{r echo=FALSE}
-# Download data
-download.file("https://raw.githubusercontent.com/MelleKG/online_groceries_healthiness/main/sample_dataset_dprep.csv", "../../gen/data-preparation/input/NL_2019.csv")
+# download data
+download.file("https://raw.githubusercontent.com/course-dprep/project-team-14/main/data/dataset_dprep.csv", "~/dprep-project-team-14/data/dataset_dprep.csv")
 
-NL_2019 <- fread("../../gen/data-preparation/input/NL_2019.csv")
-```
-\newpage
-
-
-
-**Data exploration** 
-
-The dataset is a panel data time series that captures detailed purchasing behavior at the household and retailer level for the year 2019 in the Netherlands. Each row represents a specific product purchased by a unique household on a given date, providing insights into individual consumption patterns over time. Key variables include the date of purchase, household and retailer identifier, and product details, such as barcode, quantity purchased and price. The panel structure allows for tracking changes in purchasing habits, retailer preferences, and product choices across time. 
-
-Note that the original dataset contains 15 variable, but not every one of those is relevant for this study. In de data preparation phase I will trim and recode the dataset in such a way that best allows for analysis of the study. The table below presents a brief description of the variables relevant for this study.
-
-
-```{r, echo=FALSE, results='asis'}
-variable_table <- data.frame(
-  Variable = c("Panelist", "Date of purchase", "Barcode", "Retailer", "Brand", 
-               "Total unit sales", "Total value sales", "Total volume sales", 
-               "Purchase method", "category", "Measurement unit", 
-               "Volume per unit", "segment"),
-  Description = c(
-    "Unique identifier for each household",
-    "Date on which the purchase was made",
-    "Barcode of the product purchased",
-    "Numeric indicator of the supermarket at which the purchase was made",
-    "The brand of the product",
-    "Total units of the product sold",
-    "Total value of the sales for the product (in Euro cents)",
-    "Total volume of the product sold",
-    "Method of purchase (i.e. offline or online)",
-    "Category indicator to group products (e.g. vegetables)",
-    "The unit at which the volume of a product is measured",
-    "The volume per unit",
-    "A generalized category indicator, based on the 'category' variable"))
-    
-# Print table with xtable
-print(xtable(variable_table, caption = "Description of variables in dataset"), 
-      comment = FALSE, 
-      include.rownames = FALSE, 
-      caption.placement = "bottom")
-
+DT <- fread("~/dprep-project-team-14/data/dataset_dprep.csv")
 ```
 
 
-This research is focused on distribution of purchases by the online and offline channel. The dataset contains purchase data of 150 unique households in the Netherlands in 2019. These households made over 180.000 individual product purchases across 26 different retailers. Table 2 below summarizes some key metrics from the dataset. Out of the 150 households in the panel, 26 have purchased online at least once in 2019. These 26 households combine for just over 6000 online purchases, meaning that approximately 3% of the purchases is made online. The 'online households' are the households of interest for this study, and will serve as the treated group in the difference-in-differences analysis I will perform later on.
- 
-```{r, include=FALSE}
-# purchase distribution across channels
-table(NL_2019$channel)
+*Data preparation* 
+**Step 1. Cleaning data**
+```{r}
+# remove irrelevant variables
+DT[, c("Promo", "PL", "Volume_per_unit",  "BG_Category_number") := NULL]
 
-# online households
-NL_2019 %>% 
-  filter(channel == "online") %>%
-  summarise(online_shoppers = n_distinct(Panelist))
+# change variables names
+DT <- setnames(DT, 
+               old = c("Date_of_purchase", "Total_unit_sales", "Total_value_sales", "Total_volume_sales", 
+                       "Panelist", "Barcode", "Retailer", "Brand", "Measurement_unit", "segment", "channel"),
+               new = c("date", "units", "value", "volume", "panelist", "barcode", "retailer", "brand", 
+                       "measurement_unit", "segment", "channel"))
 
+
+# create structure in columns for overview
+setcolorder(DT, c("panelist", "date", "retailer", "barcode", "brand", "segment", "channel", "units", "value", "volume", "measurement_unit") )
 ```
 
-```{r, echo=FALSE, results='asis'}
-summary_table <- data.frame(
-  Metric = c("Number of Households", "Number of Retailers", "Number of Purchases"),
-  Count = c(length(unique(NL_2019$Panelist)), length(unique(NL_2019$Retailer)), nrow(NL_2019)))
 
-print(xtable(summary_table, caption = "Summary structure dataset"), 
-      comment = FALSE, 
-      include.rownames = FALSE, 
-      caption.placement = "bottom")
+**Step 2. Creating variables**
+```{r}
+# creating week_number variable
+start_date <- as.Date("2019-01-01") # observation begins on tuesday 01-01-2019
+start_date <- start_date - (wday(start_date) - 2) # start week 1 on a Monday
+
+DT <- DT[, week_number := as.integer(difftime(date, start_date, units = "weeks") + 1)]
+
+# identify online shoppers (at least online once)
+DT[, number_online_trips := uniqueN(date[channel == "online"]), by = panelist]
+DT[, shopper_type := fifelse(number_online_trips == 0, 0, 1), by = panelist]
+
+DT[, first_purchase_week := min(week_number), by = panelist]
+DT[, last_purchase_week := max(week_number), by = panelist]
+
+#data.table code gives an error so switched to dplyr instead
+
+DT <- DT %>% group_by(panelist) %>% mutate(first_online_week = ifelse(shopper_type == 1, min(week_number[channel == "online"]), 0)) %>% ungroup() 
+# filter at least 4 weeks of data before & after online adoption moment
+adopters <- DT %>% filter(shopper_type == 1)
+
+adopters <- adopters %>%
+  group_by(panelist) %>%
+  mutate(
+    weeks_before_adoption = first_online_week - first_purchase_week,
+    weeks_after_adoption = last_purchase_week - first_online_week + 1) %>%
+  ungroup()
+
+adopters <- adopters %>% filter(weeks_before_adoption >= 4 & weeks_after_adoption >= 4)
+
+#filter online shoppers in DT
+DT <- DT %>% filter(panelist %in% adopters$panelist | shopper_type == 0)
 ```
+
+**Step 3. Aggregation to weekly level**
+```{r}
+# aggregating to weekly basket level
+weekly_baskets <- setDT(DT %>% group_by(panelist, week_number) %>%
+                  summarise(
+                    treatment_group = first(shopper_type),
+                    cohort_period = first(first_online_week),
+                    prop_expenditure_vegetables = sum(value[segment == "groente"]) / sum(value) * 100) %>%
+                  ungroup() )
+```
+
+**Step 4. Saving data**
+```{r}
+# saving aggregated baskets 
+fwrite(weekly_baskets, "~/dprep-project-team-14/gen/data-preparation/weekly_baskets.csv")   
+```
+
+
+
+
 
 
 
