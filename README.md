@@ -1,12 +1,6 @@
 # The Impact of Online Grocery Shopping (OGS) on the Healthiness of Households’ Food Purchases
 
-
-
-## *Note: for the project update deliverables please look in the deliverables folder for the respective week*
-
-
-
-## Research motivation
+## Motivation
 
 The demand for healthier food consumption has increased significantly in recent years. For many households, supermarket retailers are still the primary source for their food purchases. By shaping the environment in
 which purchasing decisions are made, retailers play a crucial role in the forming of consumers’ food purchasing
@@ -20,7 +14,7 @@ purchases across both channels. As such, the central question in this project is
 *How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online
 and offline grocery channels?*
 
-## Method
+## Method and results
 
 The formal analysis examines how the healthiness of households’ grocery baskets changes once they start
 shopping in online channels in addition to their in-store purchases. We will employ a Difference-in-Difference
@@ -30,11 +24,16 @@ for general trends that affect all households (e.g. COVID-19 pandemic). By using
 the effect that OGS has on the healthiness of households’ grocery food purchases.
 
 ## Repository overview
-- README.md
-- deliverables: used for dataprep class. The deliverables provide an updated markdown file and knitted pdf file for each week
-- data: raw data used in the project
-- gen: generated files resulting from R code
-- src:  source code (.R) needed to analyse data & print results
-- makefile: makefile to automatically run entire project
-*note: this project uses distinct folders for different stages of the project. These stages include; data-preparation, analysis & paper*
+- **README.md**
+- **data**: all raw data files used for this project
+- **deliverables**: used for dataprep class. The deliverables provide an updated markdown file and knitted pdf file for each week
+- **gen**: all generated files such as tables, figures, logs.
+    * Three parts: **data_preparation**, **analysis**, and **paper**.
+    * **audit**: put the resulting log/tables/figures of audit program. It has three sub-folders: **figure**, **log**, and **table**.
+    * **temp** : put the temporary files, such as some intermediate datasets. We may delete these filed in the end.
+    * **output**: put results, including the generated figures in sub-folder figure, log files in sub-folder log, and tables in sub-folder table.
+    * **input**: put all temporary input files
+- **src**:  all source codes.
+  * Three parts: **data_preparation**, **analysis**, and **paper**. (including tex files).
 
+## Running instructions (will be added later)
