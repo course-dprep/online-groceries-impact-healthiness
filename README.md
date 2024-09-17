@@ -1,4 +1,4 @@
-# The Impact of Online Grocery Shopping on the Healthiness of Households’ Food Purchases
+# The Impact of Online Grocery Shopping (OGS) on the Healthiness of Households’ Food Purchases
 
 
 
