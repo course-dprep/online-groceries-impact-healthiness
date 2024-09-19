@@ -47,3 +47,6 @@ To manipuate and analyse the data, this project makes use of several packages wi
   
 
 ## Running instructions (will be added later)
+
+## Author 
+Melle Klein Goldewijk (m.kleingoldewijk@tilburguniversity.edu)
