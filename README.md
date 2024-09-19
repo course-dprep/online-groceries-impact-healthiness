@@ -39,8 +39,11 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
 This project uses R as a tool for data analysis and printing of results tables and graphs. Please follow the installation guide on Tilburg Science Hub to install R and RStudio by clicking on the following [link](https://tilburgsciencehub.com/topics/computer-setup/software-installation/rstudio/r/).
 
 To manipuate and analyse the data, this project makes use of several packages within R. These packages will be automatically installed (if not installed already) when running the full source code. The packages that are used are:
-*
-*
-*
+* data.table
+* dplyr
+* xtable
+* tinytex
+* ggplot2
+  
 
 ## Running instructions (will be added later)
