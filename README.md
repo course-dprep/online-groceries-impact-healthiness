@@ -11,8 +11,7 @@ more healthy purchases online and purchase unhealthy products mainly offline. Mo
 examines how households alternate between online and offline shopping trips and how they allocate their
 purchases across both channels. As such, the central question in this project is:
 
-*How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online
-and offline grocery channels?*
+*How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online and offline grocery channels?*
 
 ## Method and results
 
@@ -35,5 +34,8 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
     * **input**: put all temporary input files
 - **src**:  all source codes.
   * Three parts: **data_preparation**, **analysis**, and **paper**. (including tex files).
+
+## Dependencies
+This project uses RStudio as a tool for data analysis and printing of results tables and graphs. Please follow the installation guide on Tilburg Science Hub to install R and RStudio by clicking on the following [link](https://tilburgsciencehub.com/topics/computer-setup/software-installation/rstudio/r/).
 
 ## Running instructions (will be added later)
