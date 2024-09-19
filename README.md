@@ -32,10 +32,15 @@ the effect that OGS has on the healthiness of households’ grocery food purchas
     * **temp** : put the temporary files, such as some intermediate datasets. We may delete these filed in the end.
     * **output**: put results, including the generated figures in sub-folder figure, log files in sub-folder log, and tables in sub-folder table.
     * **input**: put all temporary input files
-- **src**:  all source codes.
+- **src**:  all source codes used for data manipulation.
   * Three parts: **data_preparation**, **analysis**, and **paper**. (including tex files).
 
 ## Dependencies
-This project uses RStudio as a tool for data analysis and printing of results tables and graphs. Please follow the installation guide on Tilburg Science Hub to install R and RStudio by clicking on the following [link](https://tilburgsciencehub.com/topics/computer-setup/software-installation/rstudio/r/).
+This project uses R as a tool for data analysis and printing of results tables and graphs. Please follow the installation guide on Tilburg Science Hub to install R and RStudio by clicking on the following [link](https://tilburgsciencehub.com/topics/computer-setup/software-installation/rstudio/r/).
+
+To manipuate and analyse the data, this project makes use of several packages within R. These packages will be automatically installed (if not installed already) when running the full source code. The packages that are used are:
+*
+*
+*
 
 ## Running instructions (will be added later)
