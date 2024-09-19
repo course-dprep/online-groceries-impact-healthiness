@@ -1,6 +1,6 @@
 # The Impact of Online Grocery Shopping (OGS) on the Healthiness of Households’ Food Purchases
 
-## Motivation
+## Research motivation
 
 The demand for healthier food consumption has increased significantly in recent years. For many households, supermarket retailers are still the primary source for their food purchases. By shaping the environment in
 which purchasing decisions are made, retailers play a crucial role in the forming of consumers’ food purchasing
