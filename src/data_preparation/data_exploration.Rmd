@@ -99,8 +99,8 @@ print(xtable(variable_table, caption = "Description of variables in dataset"),
 ```
 \newpage
 
-## Dataset structure
-This research is focused on distribution of purchases by the online and offline channel. The dataset contains purchase data of 150 unique households in the Netherlands in 2019. These households made over 180.000 individual product purchases across 26 different retailers. Table 2 below summarizes some key metrics from the dataset. Out of the 150 households in the panel, 26 have purchased online at least once in 2019. These 26 households combine for just over 6000 online purchases, meaning that approximately 3% of the purchases is made online. The 'online households' are the households of interest for this study, and will serve as the treated group in the difference-in-differences analysis I will perform later on.
+## Structure dataset
+This research is focused on distribution of purchases by the online and offline channel. The dataset contains purchase data of 150 unique households in the Netherlands in 2019. These households made over 180.000 individual product purchases across 26 different retailers. Table 2 below summarizes some key metrics from the dataset. 
  
 
 ```{r, echo=FALSE, results='asis'}
@@ -113,10 +113,11 @@ print(xtable(summary_table, caption = "Summary structure dataset"),
       include.rownames = FALSE, 
       caption.placement = "bottom")
 ```
+Out of the 150 households in the panel, 26 have purchased online at least once in 2019. These 26 households combine for just over 6000 online purchases, meaning that approximately 3% of the purchases is made online. The 'online households' are the households of interest for this study, and will serve as the treated group in the difference-in-differences analysis I will perform later on.
 
 ## Basket summary statistics
 
-In this project I will aggregate the data to the basket level and eventually look at weekly purchases. The table below presents some general basket summary statistics. As can be seen, households purchase on average 10 products during a shopping trip and spend on average 22 euros per trip. 
+The raw dataset contains individual product purchases. However, in this project I will aggregate the data to the basket level and eventually look at weekly purchases. The table below presents some general basket summary statistics. As can be seen, households purchase on average 10 products during a shopping trip and spend on average 22 euros per trip.
 
 
 ```{r, include = FALSE}
@@ -134,6 +135,8 @@ baskets <- DT %>%
 
 
 ```{r, echo=FALSE, results='asis'}
+# summary of basket size & expenditure
+
 summary_stats <- baskets %>%
   summarise(
     "Mean basket size" = mean(basket_size, na.rm = TRUE),
@@ -149,13 +152,11 @@ print(summary_xtable <- xtable(summary_stats, caption = "Summary Statistics of A
 
 
 
+### Sales across retailers and product segments
 
+It is important to understand in broader terms where and how the household make their purchases. Figure 1 below shows an overview of the total expenditure per retailer. It becomes evident that there are 3 rather dominant retailers: Retailer 4, Retailer 15 and Retailer 17. These retailers combine for nearly 60% of the total expenditure, indicating their significant influence in the market. This concentration suggests that consumers may have developed chain brand loyalty.
 
-### Sales across retailers
-
-Before diving into the specifics of the purchased products, it is important to in broad terms where and how the household make their purchases. Figure 1 below shows an overview of the total expenditure per retailer. It becomes evident that there are 3 rather dominant retailers: Retailer 4, Retailer 15 and Retailer 17. These retailers combine for nearly 60% of the total expenditure. 
-
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, results='asis', fig.width = 5, fig.height = 2, fig.align = "center"}
 retailer_sales <- DT %>%
   group_by(Retailer) %>%
   summarise(total_value_sales = sum(Total_value_sales) /100) %>%
@@ -173,8 +174,43 @@ ggplot(DT, aes(x = factor(Retailer), y = (`Total_value_sales` / 100))) +
   theme(    plot.caption = element_text(hjust = 0.5) )
 ```
 
+When examining the product segments where households allocate most of their expenditure, it becomes clear that spending is quite diverse. The most dominant categories—vegetables, meat, and fruits—suggest that, on average, households invest a significant portion of their total expenditure in food groups commonly recognized as healthy. This focus on nutritious options raises an important research question: How does the proportion of expenditure on vegetables and fruits reflect the overall healthiness of households' purchasing habits? To answer this question, it is crucial to gain insights into the average spending levels in these specific product categories. Understanding these expenditures will help assess the health implications of household shopping behaviors.
 
 
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results='asis', fig.width = 5, fig.height = 4, fig.align = "center"}
+expenditure_table <- DT %>%
+  group_by(segment) %>%
+  summarise(expenditure_proportion = (sum(Total_value_sales) / sum(DT$Total_value_sales)) * 100) %>%
+  ungroup()
 
+# Get the top 10 segments
+top_segments <- expenditure_table %>%
+  arrange(desc(expenditure_proportion)) %>%
+  slice_head(n = 10)
 
+# Calculate the "Other" category
+other_sales <- data.frame(
+  segment = "Other",
+  expenditure_proportion = sum(expenditure_table$expenditure_proportion[-(1:10)])
+)
 
+# Combine top segments with "Other"
+final_data <- bind_rows(top_segments, other_sales)
+
+final_data$segment <- reorder(final_data$segment, final_data$expenditure_proportion)
+
+# Create the pie chart
+ggplot(final_data, aes(x = "", y = expenditure_proportion, fill = segment)) +
+  geom_bar(stat = "identity", width = 0.3) +  # Adjust width here
+  labs(title = "Expenditure Distribution by Segment", x = "", y = "Expenditure Proportion (%)") +
+  theme_minimal() +
+  theme(legend.title = element_blank()) +
+  geom_text(aes(label = paste0(round(expenditure_proportion, 1), "%")), 
+            position = position_stack(vjust = 0.5), 
+            color = "white", size = 4)
+
+```
+
+## Conclusion
+
+This exploration report provides some early insights into the structure of the dataset and the purchase behaviors of households. From these insights, this study will focus on the change in households' expenditure to some *healthy* product groups before and after starting to shop for groceries through online channels.
