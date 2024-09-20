@@ -1,3 +1,5 @@
+# note: the automation of the project is not yet created, therefore I create the entire directory again in each seperate markdown. When we learn Make i will automate it so that this directory creation is only done once
+
 ```{r}
 library(data.table)
 library(dplyr)
