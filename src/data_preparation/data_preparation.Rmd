@@ -1,0 +1,129 @@
+```{r}
+library(data.table)
+library(dplyr)
+library(tidyr)
+library(tinytex)
+library(xtable)
+```
+
+
+```{r, project_setup}
+# creating directory for project
+
+# set wd to home as basis for project storage
+setwd("~")
+
+# create directory to save project
+dir.create("./online-groceries-impact-healthiness")
+setwd("./online-groceries-impact-healthiness")
+
+# create sub-directories
+dir.create("data")
+dir.create("gen")
+dir.create("gen/data-preparation")
+dir.create("gen/analysis")
+dir.create("gen/paper")
+dir.create("src")
+dir.create("src/data-preparation")
+dir.create("src/analysis")
+dir.create("src/paper")
+
+# installing and loading required R packages
+
+required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2")
+
+# Install missing packages
+installed_packages <- rownames(installed.packages())
+for (pkg in required_packages) {
+  if (!pkg %in% installed_packages) 
+    {install.packages(pkg, dependencies = TRUE)}
+}
+
+# Load the packages
+lapply(required_packages, library, character.only = TRUE)
+
+rm(pkg, installed_packages, required_packages)
+```
+
+
+
+```{r import_data} 
+setwd("~/online-groceries-impact-healthiness")
+
+# download data
+download.file("https://raw.githubusercontent.com/course-dprep/online-groceries-impact-healthiness/refs/heads/main/data/dataset_dprep.csv", "~/online-groceries-impact-healthiness/data/dataset_dprep.csv")
+
+DT <- fread("~/online-groceries-impact-healthiness/data/dataset_dprep.csv")
+```
+
+
+```{r, cleaning_raw_data}
+# remove irrelevant variables
+DT[, c("Promo", "PL", "Volume_per_unit",  "BG_Category_number") := NULL]
+
+# change variables names
+DT <- setnames(DT, 
+               old = c("Date_of_purchase", "Total_unit_sales", "Total_value_sales", "Total_volume_sales", 
+                       "Panelist", "Barcode", "Retailer", "Brand", "Measurement_unit", "segment", "channel"),
+               new = c("date", "units", "value", "volume", "panelist", "barcode", "retailer", "brand", 
+                       "measurement_unit", "segment", "channel"))
+
+
+# create structure in columns for overview
+setcolorder(DT, c("panelist", "date", "retailer", "barcode", "brand", "segment", "channel", "units", "value", "volume", "measurement_unit") )
+```
+
+
+
+
+```{r, data_preparation}
+# identifying online shoppers
+
+
+# week_number variable
+start_date <- as.Date("2019-01-01") # observation begins on tuesday 01-01-2019
+start_date <- start_date - (wday(start_date) - 2) # start week 1 on a Monday
+
+DT <- DT[, week_number := as.integer(difftime(date, start_date, units = "weeks") + 1)]
+
+# identify online shoppers (at least online once)
+DT[, number_online_trips := uniqueN(date[channel == "online"]), by = panelist]
+DT[, shopper_type := fifelse(number_online_trips == 0, 0, 1), by = panelist]
+
+DT[, first_purchase_week := min(week_number), by = panelist]
+DT[, last_purchase_week := max(week_number), by = panelist]
+
+# error in data.table so continue with dplyr
+DT <- DT %>% group_by(panelist) %>%
+  mutate(first_online_week = ifelse(shopper_type ==1, min(week_number[channel == "online"]), 0))
+
+# filter at least 4 weeks of data before & after online adoption moment
+adopters <- DT %>% filter(shopper_type == 1)
+
+adopters <- adopters %>%
+  group_by(panelist) %>%
+  mutate(
+    weeks_before_adoption = first_online_week - first_purchase_week,
+    weeks_after_adoption = last_purchase_week - first_online_week + 1) %>%
+  ungroup()
+
+adopters <- adopters %>% filter(weeks_before_adoption >= 4 & weeks_after_adoption >= 4)
+
+#filter online shoppers in DT
+DT <- DT %>% filter(panelist %in% adopters$panelist | shopper_type == 0)
+```
+
+```{r basket_aggregation}
+# aggregation purchase level
+weekly_baskets <- setDT(DT %>% group_by(panelist, week_number) %>%
+                  summarise(
+                    treatment_group = first(shopper_type),
+                    cohort_period = first(first_online_week),
+                    prop_expenditure_vegetables_fruits = (sum(value[segment == "groente"]) + sum(value[segment == "fruit"]))  / sum(value) * 100) %>%
+                  ungroup() )
+```
+
+```{r save_data}
+fwrite(weekly_baskets, "~/online-groceries-impact-healthiness/gen/data-preparation/weekly_baskets.csv")         
+```
+
