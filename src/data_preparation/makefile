@@ -8,5 +8,5 @@ all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets.csv
 $(INPUT)/weekly_baskets.csv: $(DP)/data_cleaning.R
 	R --vanilla < $(DP)/data_cleaning.R
 
-$(DATA)/dataset_dprep.csv: $(DP)/download_data.R
+$(DATA)/dataset_dprep.csv: $(DP)/download_data.R project_setup.R
 	R --vanilla < $(DP)/download_data.R
