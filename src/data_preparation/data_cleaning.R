@@ -52,4 +52,4 @@ adopters <- adopters %>% filter(weeks_before_adoption >= 4 & weeks_after_adoptio
 DT <- DT[panelist %in% adopters$panelist | shopper_type == 0]
 
 # create clean dataset
-fwrite(data_clean, "../../gen/data_preparation/input/data_clean.csv")
+fwrite(DT, "../../gen/data_preparation/input/data_clean.csv")
