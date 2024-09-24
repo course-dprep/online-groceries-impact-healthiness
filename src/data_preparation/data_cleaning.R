@@ -51,12 +51,5 @@ adopters <- adopters %>% filter(weeks_before_adoption >= 4 & weeks_after_adoptio
 #filter online shoppers in DT
 DT <- DT[panelist %in% adopters$panelist | shopper_type == 0]
 
-# weekly basket aggregation
-weekly_baskets <- setDT(DT %>% group_by(panelist, week_number) %>%
-                  summarise(
-                    treatment_group = first(shopper_type),
-                    cohort_period = first(first_online_week),
-                    prop_expenditure_vegetables = sum(value[segment == "groente"]) / sum(value) * 100) %>%
-                  ungroup() )
-
-fwrite(weekly_baskets, "../../gen/data_preparation/input/weekly_baskets.csv")                    
+# create clean dataset
+fwrite(data_clean, "../../gen/data_preparation/input/data_clean.csv")
