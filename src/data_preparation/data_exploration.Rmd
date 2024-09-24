@@ -9,6 +9,7 @@ library(dplyr)
 library(tidyr)
 library(tinytex)
 library(xtable)
+library(ggplot2)
 ```
 
 
