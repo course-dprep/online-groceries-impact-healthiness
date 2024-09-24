@@ -2,7 +2,8 @@
 library(data.table)
 library(dplyr)
 
-dir.create("../../gen/data_preparation/input")
+dir.create("../../gen")
+dir.create("../../gen/data_preparation")
 
 DT <- fread("../../data/dataset_dprep.csv")
 
@@ -58,4 +59,4 @@ weekly_baskets <- setDT(DT %>% group_by(panelist, week_number) %>%
                     prop_expenditure_vegetables = sum(value[segment == "groente"]) / sum(value) * 100) %>%
                   ungroup() )
 
-fwrite(weekly_baskets, "../../gen/data_preparation/input/weekly_baskets.csv")                    
+fwrite(weekly_baskets, "../../gen/data_preparation/weekly_baskets.csv")                    
