@@ -12,3 +12,5 @@ $(INPUT)/weekly_baskets.csv: $(DP)/data_cleaning.R
 $(DATA)/dataset_dprep.csv: $(DP)/download_data.R 
 	R --vanilla < $(DP)/download_data.R
 
+$(DP)/install_packages.R: $(DP)/install_packages.R
+		R --vanilla < $(DP)/install.packages.R
