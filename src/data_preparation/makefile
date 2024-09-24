@@ -6,10 +6,10 @@ TEMP = ../../gen/data_preparation/temp
 all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets.csv
 
 
-$(INPUT)/weekly_baskets.csv: $(DP)/data_cleaning.R
+$(INPUT)/weekly_baskets.csv: $(DP)/data_cleaning.R $(DP)/project_setup.R
 	R --vanilla < $(DP)/data_cleaning.R
 
-$(DATA)/dataset_dprep.csv: $(DP)/download_data.R 
+$(DATA)/dataset_dprep.csv: $(DP)/download_data.R $(DP)/project_setup.R
 	R --vanilla < $(DP)/download_data.R
 
 $(DP)/project_setup.R: $(DP)/project_setup.R
