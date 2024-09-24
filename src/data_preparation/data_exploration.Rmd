@@ -14,7 +14,7 @@ library(xtable)
 
 ```{r load_data, include=FALSE, message=FALSE, warning=FALSE}
 
-DT <- fread("../../gen/data_preparation/input/data_clean.csv")
+DT <- fread("../../gen/data_preparation/input")
 ```
 
 ## Introduction
