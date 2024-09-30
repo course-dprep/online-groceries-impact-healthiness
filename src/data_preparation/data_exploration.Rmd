@@ -9,61 +9,18 @@ library(dplyr)
 library(tidyr)
 library(tinytex)
 library(xtable)
+library(ggplot2)
 ```
 
 
-```{r, project_setup, include=FALSE, message=FALSE, warning=FALSE}
-# creating directory for project
+```{r load_data, include=FALSE, message=FALSE, warning=FALSE}
 
-# set wd to home as basis for project storage
-setwd("~")
-
-# create directory to save project
-dir.create("./online-groceries-impact-healthiness")
-setwd("./online-groceries-impact-healthiness")
-
-# create sub-directories
-dir.create("data")
-dir.create("gen")
-dir.create("gen/data-preparation")
-dir.create("gen/analysis")
-dir.create("gen/paper")
-dir.create("src")
-dir.create("src/data-preparation")
-dir.create("src/analysis")
-dir.create("src/paper")
-
-# installing and loading required R packages
-
-required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2")
-
-# Install missing packages
-installed_packages <- rownames(installed.packages())
-for (pkg in required_packages) {
-  if (!pkg %in% installed_packages) 
-    {install.packages(pkg, dependencies = TRUE)}
-}
-
-# Load the packages
-lapply(required_packages, library, character.only = TRUE)
-
-rm(pkg, installed_packages, required_packages)
-```
-
-
-
-```{r import_data, project_setup, include=FALSE, message=FALSE, warning=FALSE}
-setwd("~/online-groceries-impact-healthiness")
-
-# download data
-download.file("https://raw.githubusercontent.com/course-dprep/online-groceries-impact-healthiness/refs/heads/main/data/dataset_dprep.csv", "~/online-groceries-impact-healthiness/data/dataset_dprep.csv")
-
-DT <- fread("~/online-groceries-impact-healthiness/data/dataset_dprep.csv")
+DT <- fread("../../data/dataset_dprep.csv")
 ```
 
 ## Introduction
 
-This study aims to analyse the impact of households' adoption to online grocery shopping channels on the healthiness of their total (online & offline) grocery purchases. This report serves to provide information on the dataset (i.e. data structure and key variables) and will present several summary statistics to enhance understanding of the data.
+This study aims to analyse the impact of households adoption to online grocery shopping channels on the healthiness of their total (online & offline) grocery purchases. This report serves to provide information on the dataset (i.e. data structure and key variables) and will present several summary statistics to enhance understanding of the data.
 
 The dataset used for this project takes form of panel data time series that captures detailed purchasing behavior at the household and retailer level for the year 2019 in the Netherlands. Each row represents a specific product purchased by a unique household on a given date, providing insights into individual consumption patterns over time. Key variables include the date of purchase, household and retailer identifier, and product details, such as barcode, quantity purchased and price. The panel structure allows for tracking changes in purchasing habits, retailer preferences, and product choices across time. 
 
@@ -174,7 +131,7 @@ ggplot(DT, aes(x = factor(Retailer), y = (`Total_value_sales` / 100))) +
   theme(    plot.caption = element_text(hjust = 0.5) )
 ```
 
-When examining the product segments where households allocate most of their expenditure, it becomes clear that spending is quite diverse. The most dominant categories—vegetables, meat, and fruits—suggest that, on average, households invest a significant portion of their total expenditure in food groups commonly recognized as healthy. This focus on nutritious options raises an important research question: How does the proportion of expenditure on vegetables and fruits reflect the overall healthiness of households' purchasing habits? To answer this question, it is crucial to gain insights into the average spending levels in these specific product categories. Understanding these expenditures will help assess the health implications of household shopping behaviors.
+When examining the product segments where households allocate most of their expenditure, it becomes clear that spending is quite diverse. The most dominant categories—vegetables, meat, and fruits—suggest that, on average, households invest a significant portion of their total expenditure in food groups commonly recognized as healthy. This focus on nutritious options raises an important research question: How does the proportion of expenditure on vegetables and fruits reflect the overall healthiness of households purchasing habits? To answer this question, it is crucial to gain insights into the average spending levels in these specific product categories. Understanding these expenditures will help assess the health implications of household shopping behaviors.
 
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results='asis', fig.width = 5, fig.height = 4, fig.align = "center"}

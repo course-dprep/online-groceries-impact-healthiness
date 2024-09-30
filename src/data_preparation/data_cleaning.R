@@ -1,4 +1,11 @@
-DT <- fread("./project-team-14/data/dataset_dprep.csv")
+# load packages
+library(data.table)
+library(dplyr)
+
+# create directory to store output
+dir.create("../../gen/data_preparation/input", recursive = TRUE)
+
+DT <- fread("../../data/dataset_dprep.csv")
 
 # remove irrelevant variables
 DT[, c("Promo", "PL", "Volume_per_unit",  "BG_Category_number") := NULL]
@@ -30,7 +37,7 @@ DT[, last_purchase_week := max(week_number), by = panelist]
 DT[, first_online_week := fifelse(shopper_type ==1, min(week_number[channel == "online"]), 0), by = panelist]
 
 # filter at least 4 weeks of data before & after online adoption moment
-adopters <- filter(DT[shopper_type == 1])
+adopters <- DT[shopper_type == 1]
 
 adopters <- adopters %>%
   group_by(panelist) %>%
@@ -44,14 +51,5 @@ adopters <- adopters %>% filter(weeks_before_adoption >= 4 & weeks_after_adoptio
 #filter online shoppers in DT
 DT <- DT[panelist %in% adopters$panelist | shopper_type == 0]
 
-# weekly basket aggregation
-weekly_baskets <- setDT(DT %>% group_by(panelist, week_number) %>%
-                  summarise(
-                    treatment_group = first(shopper_type),
-                    cohort_period = first(first_online_week),
-                    prop_expenditure_vegetables = sum(value[segment == "groente"]) / sum(value) * 100) %>%
-                  ungroup() )
-
-fwrite(weekly_baskets, "./project-team-14/gen/data-preparation/weekly_baskets.csv")                    
-
-
+# create clean dataset
+fwrite(DT, "../../gen/data_preparation/input/data_clean.csv")
