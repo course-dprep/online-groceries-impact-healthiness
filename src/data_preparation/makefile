@@ -6,7 +6,7 @@ DP = ../../src/data_preparation
 all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets.csv
 
 
-$(INPUT)/weekly_baskets.csv: $(INPUT)/data_clean.csv $(DP)/weekly_aggregation.R
+$(INPUT)/weekly_baskets_2019.csv: $(INPUT)/data_clean.csv $(DP)/weekly_aggregation.R
 	R --vanilla < $(DP)/weekly_aggregation.R
 
 $(INPUT)/data_clean.csv: $(DATA)/dataset_dprep.csv $(DP)/data_cleaning.R
