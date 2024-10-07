@@ -3,7 +3,7 @@ INPUT = ../../gen/data_preparation/input
 DP = ../../src/data_preparation
 
 
-all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets.csv
+all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets_2019.csv
 
 
 $(INPUT)/weekly_baskets_2019.csv: $(INPUT)/data_clean.csv $(DP)/weekly_aggregation.R
