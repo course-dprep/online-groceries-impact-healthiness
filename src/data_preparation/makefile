@@ -1,6 +1,6 @@
 DATA = ../../data
 INPUT = ../../gen/data_preparation/input
-DP = .
+DP = ../../src/data_preparation
 
 
 all: $(DATA)/dataset_dprep.csv $(INPUT)/weekly_baskets.csv
