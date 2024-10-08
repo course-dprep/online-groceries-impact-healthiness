@@ -1,15 +1,17 @@
+---
+title: "Model results and conclusion"
+---
 
-```{r load_packages, include=FALSE, message=FALSE, warning=FALSE}
+```{r, include=FALSE, message=FALSE, warning=FALSE}
 library(data.table)
 library(tidyr)
 library(ggplot2)
 library(kableExtra)
 library(did)
-library(tinytex)
 ```
 
 
-```{r extract_data, include=FALSE, message=FALSE, warning=FALSE}
+```{r, include=FALSE, message=FALSE, warning=FALSE}
 results_list <- readRDS("../../gen/analysis/did_effects_list.rds")
 
 average_did_effect <- results_list$average_did_effect
@@ -29,7 +31,7 @@ Healthiness is measured as the proportion of a household's monetary budget spent
 
 
 
-```{r average_effect, echo=FALSE, results='asis'}
+```{r, echo=FALSE, results='asis'}
 average_effect_df <- data.frame(
   ATT = average_did_effect$overall.att,
   Std_Error = average_did_effect$overall.se,
@@ -44,7 +46,7 @@ kable(average_effect_df, caption = "Average Treatment Effect (ATT)") %>%
 
 A second method to analyze the results is to look at it in the form of a event study plot. Figure 1 below illustrates the average treatment effect (ATT) of households adopting online grocery shopping over a relative time window of 8 weeks around the adoption event. Each point on the plot represents the estimated ATT for a specific week relative to the adoption, with corresponding  95% CIs. The vast majority of these intervals cross zero, indicating a non-significant effect. This graph shows that there is no clear trend change in proportion of expenditure towards fruits and vegetables after adoption (t=0).
 
-```{r time_window, echo=FALSE, results='asis', fig.width=6, fig.height=4}
+```{r, echo=FALSE, results='asis', fig.width=6, fig.height=4}
 time_window_plot <- ggdid(time_window_effects)
 
 # Modify the title
@@ -60,7 +62,7 @@ A final way to analyze the results is to look at different cohorts separately. T
 
 The analysis of treatment effects by cohort shows significant variability in how households adjust their spending on fruits and vegetables after adopting online grocery shopping. While the overall average effect indicated no significant change, some cohorts exhibited notable decreases in expenditure, while others showed significant increases. These findings highlight the mixed outcomes of online grocery shopping on household food spending and suggests that different segments of the population respond differently to this shopping method. These findings underscore the importance of examining individual cohorts to understand the complex impacts of online grocery shopping on consumer behavior. In further research, I think it would be beneficial to identify different types of households, i.e. households with low versus high income or with versus without children, to see how the adoption of online groceries can affect different households in different ways.
 
-```{r cohort_analysis, echo=FALSE, results='asis', fig.width=6, fig.height=4}
+```{r, echo=FALSE, results='asis', fig.width=6, fig.height=4}
 cohort_plot <- ggdid(cohort_effects)
 
 # Modify the title
@@ -77,7 +79,9 @@ In this study, I used a staggered DiD approach to explore the impact of adopting
 
 Further analysis using an event study plot showed that the average treatment effect over an 8-week period surrounding the adoption event largely crossed zero, suggesting no clear trend in spending behavior post-adoption. Cohort analysis revealed significant variability in responses, with some households decreasing their spending on fruits and vegetables while others increased it. These mixed outcomes point to the complexity of consumer behavior in the context of online grocery shopping, emphasizing the need for more research into different household types. Deeper insights household differences could inform targeted interventions to promote healthier purchasing behaviors across consumer segments.
 
-```{r}
+```{r, include=FALSE, message=FALSE, warning=FALSE}
 rmarkdown::render('model_results.Rmd', output_file = 'Results_and_Conclusion.pdf', output_format = 'pdf_document', output_dir = '../../gen/paper')
 ```
+
+
 
