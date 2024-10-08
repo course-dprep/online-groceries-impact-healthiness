@@ -4,7 +4,7 @@ data_preparation:
 	make -C src/data_preparation
 
 analysis:
-	make -c src/analysis
+	make -C src/analysis
 
 clean:
 	R -e "unlink('data', recursive = TRUE)"
