@@ -1,7 +1,3 @@
----
-title: "Model results and conclusion"
-output: pdf_document
----
 
 ```{r load_packages, include=FALSE, message=FALSE, warning=FALSE}
 library(data.table)
