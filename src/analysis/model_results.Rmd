@@ -1,7 +1,6 @@
 ---
-title: "Model results & summaries"
+title: "Model results and conclusion"
 output: pdf_document
-output_dir: "../../src/paper/"
 ---
 
 ```{r load_packages, include=FALSE, message=FALSE, warning=FALSE}
@@ -82,4 +81,7 @@ In this study, I used a staggered DiD approach to explore the impact of adopting
 
 Further analysis using an event study plot showed that the average treatment effect over an 8-week period surrounding the adoption event largely crossed zero, suggesting no clear trend in spending behavior post-adoption. Cohort analysis revealed significant variability in responses, with some households decreasing their spending on fruits and vegetables while others increased it. These mixed outcomes point to the complexity of consumer behavior in the context of online grocery shopping, emphasizing the need for more research into different household types. Deeper insights household differences could inform targeted interventions to promote healthier purchasing behaviors across consumer segments.
 
+```{r}
+rmarkdown::render('model_results.Rmd', output_file = 'Results_and_Conclusion.pdf', output_format = 'pdf_document', output_dir = '../../gen/paper')
+```
 
