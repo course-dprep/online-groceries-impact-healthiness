@@ -1,6 +1,6 @@
 # installing required R packages
 
-required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2")
+required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2", "did", "gridExtra")
 
 # Install missing packages
 installed_packages <- rownames(installed.packages())
