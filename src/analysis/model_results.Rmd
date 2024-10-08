@@ -10,6 +10,7 @@ library(tidyr)
 library(ggplot2)
 library(kableExtra)
 library(did)
+library(tinytex)
 ```
 
 
