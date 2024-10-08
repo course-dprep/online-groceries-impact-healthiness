@@ -1,5 +1,5 @@
-*.Rhistory
-.RData
+**/*.Rhistory
+**data/
 **gen/
-*.csv
+**/*.csv
 
