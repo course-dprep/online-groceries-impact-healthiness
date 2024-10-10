@@ -13,5 +13,4 @@ $(INPUT)/data_clean.csv: $(DATA)/dataset_dprep.csv $(DP)/data_cleaning.R
 	R --vanilla < $(DP)/data_cleaning.R
 
 $(DATA)/dataset_dprep.csv: $(DP)/download_data.R $(DP)/install_packages.R
-	$(DP)/install_packages.R  # Ensure packages are installed
 	R --vanilla < $(DP)/download_data.R
