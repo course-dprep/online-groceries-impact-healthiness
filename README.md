@@ -43,8 +43,8 @@ hybrid shopping against those that continue shopping exclusively offline. Given 
 To measure the healthiness of grocery baskets, I use the proportion of total expenditure that is spent on the product category fruits and vegetables.
 
 ## Repository overview
-- **README.md**
-- **src**:  all source codes used for data manipulation.
+- README.md
+- src:  all source codes used for data manipulation.
   * analysis
 	* analysis.R
 	* makefile
@@ -57,6 +57,8 @@ To measure the healthiness of grocery baskets, I use the proportion of total exp
 	* install_packages.R
 	* makefile
 	* weekly_aggregation.R
+ - .gitignore
+ - makefile
 
 
 ## Dependencies
