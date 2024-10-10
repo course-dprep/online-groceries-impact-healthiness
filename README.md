@@ -87,12 +87,19 @@ make
 ```
 3. Running the makefile will run all makefiles needed to perform the analysis and generate results. 
 
-The generated result plots and tables can be found in the gen/paper directory, but a brief summary is shown below.
-
 ## Results
 
-The overall effect of the DiD regression can be found in the table below. Given that the Sant'Anna & Callaway method runs a DiD regression for every cohort, we can not
+The overall effect of the DiD regression can be found in the table below. Given that the Sant'Anna & Callaway method runs a DiD regression for every cohort, we can not judge significance based on a p-value for the overal effects. Rather, by constructing a 95% confidence interval, I find that the proportion of expenditure towards
+fruits and vegetables does not significantly change after adoption of OGS. In the gen/paper directory more plots can be found that analyse cohorts individually and that look at the change in healthiness over a 8-week time window around adoption. This latter plot thus looks at the DiD results through the lens of an event study to look at changes in trends around adoption. However, this plot does not show significant results either.
 
+| ATT   | Std_error | CI_lower | CI_upper |
+|-------|-----------|----------|----------|
+| -2.44 | 1.574     | -5.526   | 0.646    |
+
+
+## Conclusion
+In this study, I analyzed whether the purchasing patterns of households change upon adopting online grocery shopping. Utilizing a staggered Difference-in-Differences approach (Sant'Anna & Callaway, 2021), I examined whether the proportion of expenditure allocated to healthy product categories, specifically fruits and vegetables, changes after a household's first online shopping trip.
+The results revealed no statistically significant changes in expenditure patterns towards these healthy categories following the transition to online shopping. This lack of significance indicates that there is insufficient evidence to conclude that the adoption to online grocery shopping leads to a notable shift in the healthiness of households weekly grocery purchases.
 
 
 ## Data Preparation & Workflow Management - Team 14 
