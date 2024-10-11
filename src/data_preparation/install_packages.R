@@ -1,3 +1,6 @@
+# Set CRAN mirror
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+
 # installing required R packages
 
 required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2", "did", "kableExtra")
