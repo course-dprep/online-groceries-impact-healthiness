@@ -6,9 +6,7 @@
 The demand for healthier food consumption has increased significantly in recent years. Recent literature has investigated how the healthiness of online grocery purchases differs from offline (in-store) purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017).
 While online grocerybaskets tend to be healthier compared to offline baskets, it is unclear if the adoption of OGS contributes to
 healthier consumption or if it results in a redistribution across channels, where consumers simply shift the
-more healthy purchases online and purchase unhealthy products mainly offline. 
-
-The central question in this project follows:
+more healthy purchases online and purchase unhealthy products mainly offline. The central research question of this project follows:
 
 *How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online and offline grocery channels?*
 
