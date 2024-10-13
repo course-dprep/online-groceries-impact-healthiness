@@ -9,6 +9,7 @@ healthier consumption or if it results in a redistribution across channels, wher
 more healthy purchases online and purchase unhealthy products mainly offline. 
 
 The central question in this project follows:
+
 *How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online and offline grocery channels?*
 
 ## Method & Results
