@@ -100,7 +100,7 @@ The cohort analysis provides a more detailed understanding of how the impact of 
 Figure 2 below shows the 95% confidence interval estimates for each individual cohort.
 
 ```{r cohort_plot, echo=FALSE, out.height="70%"}
-knitr::include_graphics("../../gen/paper/cohort_plot.pdf")
+knitr::include_graphics("../../gen/paper/result_plots/cohort_plot.pdf")
 ```
 
 
@@ -109,7 +109,7 @@ knitr::include_graphics("../../gen/paper/cohort_plot.pdf")
 A final way to explore the DiD results is to frame them in a event-study plot. In figure 3 below the overall effects are analyzed through a time-window lense where we look at the trend of expenditure to fruits and vegetables in the 8 weeks before and 8 weeks after online adoption. This method is applied to see if a change in expenditure trends can be observed around the adoption moment of households. The results (unsuprisingly given the insignificance of overall effects) do not show a change in trend around adoption. Only week 4 shows a significant negative estimate, indicating that in the 4th week after adoption households show a lower proportional expenditure to fruits and vegetables. However, with the majority of CIs being insignificant, it is safe to say that there is no observable change in expenditure behavior towards healthy product groups in the 16 weeks around adoption. 
 
 ```{r time_window_plot, echo=FALSE, out.height="70%"}
-knitr::include_graphics("../../gen/paper/time_window_plot.pdf")
+knitr::include_graphics("../../gen/paper/result_plots/time_window_plot.pdf")
 ```
 
 

@@ -6,6 +6,7 @@ library(did)
 
 # create directory for output
 dir.create("../../gen/paper")
+dir.create("../../gen/paper/result_plots")
 
 # Load and extract data
 results_list <- readRDS("../../gen/analysis/did_effects_list.rds")
@@ -47,14 +48,14 @@ cohort_plot <- cohort_plot +
 
 
 # Open a PDF device for results
-pdf(file = "../../gen/paper/ATT_table.pdf")
+pdf(file = "../../gen/paper/result_plots/ATT_table.pdf")
 
 gridExtra::grid.table(average_effect_df, rows = NULL)
 
 dev.off()
 
 # Open a new PDF device for plots
-pdf(file = "../../gen/paper/time_window_plot.pdf") 
+pdf(file = "../../gen/paper/result_plots/time_window_plot.pdf") 
 
 # Render the time window plot
 print(time_window_plot, width = 6, height = 3)
@@ -63,7 +64,7 @@ dev.off()
 
 
 # Open a new PDF device for plots
-pdf(file = "../../gen/paper/cohort_plot.pdf") 
+pdf(file = "../../gen/paper/result_plots/cohort_plot.pdf") 
 
 # Render the cohort plot
 print(cohort_plot, width = 5, height = 2)
