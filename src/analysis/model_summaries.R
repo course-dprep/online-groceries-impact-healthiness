@@ -54,10 +54,16 @@ gridExtra::grid.table(average_effect_df, rows = NULL)
 dev.off()
 
 # Open a new PDF device for plots
-pdf(file = "../../gen/paper/results_plots.pdf") 
+pdf(file = "../../gen/paper/time_window_plot.pdf") 
 
 # Render the time window plot
 print(time_window_plot, width = 6, height = 3)
+
+dev.off()
+
+
+# Open a new PDF device for plots
+pdf(file = "../../gen/paper/cohort_plot.pdf") 
 
 # Render the cohort plot
 print(cohort_plot, width = 5, height = 2)

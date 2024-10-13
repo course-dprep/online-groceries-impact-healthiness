@@ -73,6 +73,7 @@ To manipuate and analyse the data, this project makes use of several packages wi
 * ggplot2
 * did
 * kableExtra
+* knitr
   
 
 ## Running instructions

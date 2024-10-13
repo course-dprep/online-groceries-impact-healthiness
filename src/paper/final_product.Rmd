@@ -1,0 +1,99 @@
+---
+title: "The Impact of Online Grocery Shopping (OGS) on the Healthiness of Households’ Food Purchases"
+subtitle: "Project Datapreparation & Workflow Management 2024 - Team 14"
+output: pdf_document
+---
+
+
+```{r, load_packages, include=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+library(dplyr)
+library(tidyr)
+library(tinytex)
+library(xtable)
+library(ggplot2)
+library(knitr)
+```
+
+```{r load_data, include=FALSE, message=FALSE, warning=FALSE}
+
+DT <- fread("../../data/dataset_dprep.csv")
+```
+
+## Introduction
+
+The demand for healthier food consumption has increased significantly in recent years. For many households, supermarket retailers are still the primary source for their food purchases. By shaping the environment in
+which purchasing decisions are made, retailers play a crucial role in the forming of consumers’ food purchasing
+behavior and habits. Recent literature has investigated how the healthiness of online grocery purchases differs from offline (in-store) purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017).
+While online grocerybaskets tend to be healthier compared to offline baskets, it is unclear if the adoption of OGS contributes to
+healthier consumption or if it results in a redistribution across channels, where consumers simply shift the
+more healthy purchases online and purchase unhealthy products mainly offline. More research is needed that
+examines how households alternate between online and offline shopping trips and how they allocate their purchases across both channels. As such, the central question in this project is:
+
+*How does the transition to hybrid grocery shopping affect the healthiness of food purchases across both online and offline grocery channels?*
+
+## Methodology
+
+### Data
+
+This study uses real world panel purchase data of supermarkets in the Netherlands in 2019. The dataset contains real-world purchases by consumers in two grocery retailers and is collected by an international market research company. To ensure confidentiality, the market research company, retailers, and brands are anonymized. Additionally, the data has been modified to prevent any potential link back to the original entities. Given that this data is not publically accessible, the dataset has been stored in a separate branch in this GitHub directory. This was done to satisfy the automation requirements of the project: the makefile will download the data from this branch and store it into the main/master branch. Listed below are the final variables used in this analysis.
+
+The dataset contains purchase data of 150 unique households in the Netherlands in 2019. These households made over 180.000 individual product purchases across 26 different retailers. Listed below are the relevant variables after cleaning the data.
+
+```{r, echo=FALSE, results='asis'}
+variable_table <- data.frame(
+  Variable = c("Panelist", "Date", "Barcode", "Retailer", "Brand", 
+               "Units", "Value", "Volume", "Channel", "Measurement unit", "Segment"),
+  Description = c(
+    "Unique identifier for each household",
+    "Date on which the purchase was made",
+    "Barcode of the product purchased",
+    "Identifier for the supermarket where the purchase was made",
+    "The brand of the product",
+    "Total purchased units of the product",
+    "Total value of the sales for the product (in Euro cents)",
+    "Total volume of the product sold",
+    "Method of purchase (i.e. offline or online)",
+    "The unit at which the volume of a product is measured",
+    "A category indicator to identify product groups"))
+    
+# Print table with xtable package
+print(xtable(variable_table, caption = "Description of variables in dataset"), 
+      comment = FALSE, 
+      include.rownames = FALSE, 
+      caption.placement = "bottom")
+```
+
+\newpage
+
+### Model specification
+
+The formal analysis examines how the healthiness of households’ grocery baskets changes once they start shopping in online channels in addition to their in-store purchases. 
+I employ a Difference-in-Difference (DiD) approach to compare the changes in healthiness of households weekly grocery purchases for households that transition to
+hybrid shopping against those that continue shopping exclusively offline. Given that households get treated (i.e. adopt OGS) at different times, I use the staggered DiD approach proposed by Sant'Anna & Callaway (2021) to analyse the data and examine the research question. To measure the healthiness of grocery baskets, I use the proportion of total expenditure that is spent on the product category fruits and vegetables.
+
+The staggered DiD method from Sant'Anna & Callaway (2021) works by creating cohorts for each distinct week in which households begin shopping online. For each cohort, a separate DiD regression is conducted, comparing the change in the healthiness of grocery purchases before and after the adoption of online shopping for that specific group, while using households that do not adopt OGS ('never-treated') as the control group. The final estimate is an aggregated average, where the treatment effects from each cohort-specific DiD analysis are weighted to provide an overall measure of how online grocery shopping influences household food healthiness. This approach ensures that the variation in adoption times is accurately reflected in the analysis.
+
+## Results
+
+### Overall effect
+
+The overall effect of the DiD regression can be found in the table below. Given that the Sant'Anna & Callaway method runs a DiD regression for every cohort, we can not judge significance based on a p-value for the overal effects. Rather, by constructing a 95% confidence interval, I find that the proportion of expenditure towards
+fruits and vegetables does not significantly change after adoption of OGS.
+
+
+| **ATT** | **Std_error** | **CI_lower** | **CI_upper** |
+|---------|---------------|--------------|--------------|
+| -2.44   | 1.574         | -5.526       | 0.646        |
+
+
+### Cohort effect
+
+The cohort analysis provides a more detailed understanding of how the impact of adopting online grocery shopping (OGS) on the healthiness of households grocery purchases. Some cohorts exhibit significantly positive effects, indicating that households adopting OGS during certain time periods increased their spending on healthier options like fruits and vegetables. In contrast, other cohorts show significantly negative effects, suggesting a reduction in the proportion of healthy purchases following OGS adoption. This variation suggests that the impact of OGS on food healthiness differs across households and time periods, likely due to factors such as household characteristics or external conditions during adoption.
+
+The graph below shows the 95% confidence interval estimates for each individual cohort.
+
+```{r include-pdf-plot, echo=FALSE}
+knitr::include_graphics("../../gen/paper/your-plot.pdf")
+```
+
