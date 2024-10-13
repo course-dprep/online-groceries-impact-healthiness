@@ -1,5 +1,6 @@
 # The Impact of Online Grocery Shopping (OGS) on the Healthiness of Households’ Food Purchases
 
+*Note: the final product of this project ("final_product.pdf") can be found in the gen/paper directory after running the makefile* 
 ## Motivation
 
 The demand for healthier food consumption has increased significantly in recent years. Recent literature has investigated how the healthiness of online grocery purchases differs from offline (in-store) purchases (Chintala et al, 2024; Harris-Lagoudakis, 2022; Huyghe et al, 2017).
@@ -86,7 +87,8 @@ git clone https://github.com/course-dprep/online-groceries-impact-healthiness
 ```
 make
 ```
-3. Running the makefile will run all makefiles needed to perform the analysis and generate results. 
+3. Running the makefile will run all makefiles needed to perform the analysis and generate results.
+4. The final product of this project takes form of a pdf file named "final_product.pdf" and is stored in the gen/paper directory.
 
 
 ## Data Preparation & Workflow Management - Team 14 
