@@ -3,7 +3,7 @@ options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
 # installing required R packages
 
-required_packages <- c("data.table", "dplyr", "xtable", "tinytex", "ggplot2", "did", "kableExtra")
+required_packages <- c("knitr", "data.table", "dplyr", "xtable", "tinytex", "ggplot2", "did", "kableExtra")
 
 # Install missing packages
 installed_packages <- rownames(installed.packages())
